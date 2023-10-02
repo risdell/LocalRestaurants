@@ -13,8 +13,9 @@ ui <- fluidPage(
         sidebarPanel(
             selectInput(inputId = "Type",
                         label = "Style of Food:",
-                        choices = unique(osm.d$Style),
-                        multiple = FALSE)
+                        choices = unique(restaurants$Style),
+                        multiple = TRUE,
+                        selected = unique(restaurants$Style))
         ),
 
         # Show a plot of the generated distribution
@@ -26,18 +27,24 @@ ui <- fluidPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-
-    output$locs <- renderTmap({
-      tm_shape(shp = restaurants, name = "Restaurants") +
-        tm_markers(col = "Style",
-                   popup.vars = c(
-                     Name = "Restaurant",
-                     Style = "Style",
-                     Address = "Address",
-                     Website = "Website", 
-                     Notes = "Notes"
-                   ))
-    })
+  
+  
+  
+  output$locs <- renderTmap({
+    filtered <- restaurants %>% 
+      filter(Style == input$Type)
+    
+    tm_shape(shp = filtered, name = "Restaurants") +
+      tm_dots(col = "Style",
+              size = 0.7,
+              popup.vars = c(
+                Name = "Restaurant",
+                Style = "Style",
+                Address = "Address",
+                Website = "Website", 
+                Notes = "Notes"
+              ))
+  })
 }
 
 # Run the application 

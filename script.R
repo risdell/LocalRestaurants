@@ -8,21 +8,21 @@ require(tidygeocoder)
 d <- read.csv("./Restaurants.csv")
 
 # Geocode it
-osm.d <- d %>% 
+geo.d <- d %>% 
   geocode(
     street = Street,
     city = City,
     state = State,
-    method = "osm"
+    method = "census"
   ) %>% 
   as.data.frame(.)
 
 # Concatenate full address
-osm.d <- as.data.frame(osm.d)
-osm.d$Address <- paste0(osm.d$Street, " ",
-                        osm.d$Suite, ", ",
-                        osm.d$City, ", ",
-                        osm.d$State)
+geo.d <- as.data.frame(geo.d)
+geo.d$Address <- paste0(geo.d$Street, " ",
+                        geo.d$Suite, ", ",
+                        geo.d$City, ", ",
+                        geo.d$State)
 
 # convert to shapefile
-restaurants <- st_as_sf(osm.d, coords = c("long", "lat"), crs = 4326)
+restaurants <- st_as_sf(geo.d, coords = c("long", "lat"), crs = 4326)
