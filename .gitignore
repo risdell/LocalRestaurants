@@ -1,0 +1,28 @@
+# History files
+*.Rhistory
+*.Rapp.history
+.Rhistory
+.Rapp.history
+
+# Session Data Files
+*.RData
+.RData
+.RDataTmp
+*.RDataTmp
+
+# User-specific files
+.Ruserdata
+
+# RStudio files
+.Rproj.user/
+
+# Cache
+*_cache/
+/cache/
+
+# Temporary md files
+*.utf8.md
+*.knit.md
+
+# R Environment Variables
+.Renviron
