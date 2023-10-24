@@ -5,7 +5,7 @@ require(tidygeocoder)
 
 
 # Load the data
-d <- read.csv("./Restaurants.csv")
+d <- read.csv("./data/Restaurants.csv")
 
 # Geocode it
 geo.d <- d %>% 
