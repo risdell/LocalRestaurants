@@ -1,9 +1,9 @@
 # LocalRestaurants
-## A test repo to practice and demontrate collaborative development using a shiny app and git.
+## A test repo to practice and demonstrate collaborative development using a ~~shiny~~ Yew app and git.
 
 ### TL;DR
 
 ```sh
-Rscript -e "shiny::runApp('app.R', host='0.0.0.0', port=3838)"
+cd ui; trunk serve
 ```
 
