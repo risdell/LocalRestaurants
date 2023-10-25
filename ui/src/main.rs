@@ -1,29 +1,64 @@
+use local_restaurants_ui::components::{
+    control::{Cities, Control},
+    map::{City, MapComponent, Point},
+};
 use yew::prelude::*;
-mod styles;
 
-#[function_component(HolyGrail)]
-pub fn holy_grail() -> Html {
-    let hg_class_name = styles::holy_grail().get_class_name().to_string();
-    let hf_class_name = styles::header_and_footer().get_class_name().to_string();
-    html! {
-        <div class={hg_class_name}>
-            <header class={hf_class_name.clone()}>{"Header"}</header>
-            <footer class={hf_class_name}>{"Footer"}</footer>
-        </div>
-    }
+enum Msg {
+    SelectCity(City),
 }
 
+struct Model {
+    city: City,
+    cities: Cities,
+}
 
-#[function_component(App)]
-fn app() -> Html {
-    let body_html_class_name = styles::body_and_html().get_class_name().to_string();
-    html! {
-        <div class={body_html_class_name}>
-            <HolyGrail />
-        </div>
+impl Component for Model {
+    type Message = Msg;
+    type Properties = ();
+
+    fn create(_ctx: &Context<Self>) -> Self {
+        let aachen = City {
+            name: "Aachen".to_string(),
+            lat: Point(50.7597f64, 6.0967f64),
+        };
+        let stuttgart = City {
+            name: "Stuttgart".to_string(),
+            lat: Point(48.7784f64, 9.1742f64),
+        };
+        let cities: Cities = Cities {
+            list: vec![aachen, stuttgart],
+        };
+        let city = cities.list[0].clone();
+        Self { city, cities }
+    }
+
+    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
+        match msg {
+            Msg::SelectCity(city) => {
+                self.city = self
+                    .cities
+                    .list
+                    .iter()
+                    .find(|c| c.name == city.name)
+                    .unwrap()
+                    .clone();
+            }
+        }
+        true
+    }
+
+    fn view(&self, ctx: &Context<Self>) -> Html {
+        let cb = ctx.link().callback(Msg::SelectCity);
+        html! {
+            <>
+                <MapComponent city={&self.city}  />
+                <Control select_city={cb} cities={&self.cities}/>
+            </>
+        }
     }
 }
 
 fn main() {
-    yew::Renderer::<App>::new().render();
+    yew::Renderer::<Model>::new().render();
 }

@@ -770,6 +770,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "leaflet"
+version = "0.2.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "910fb560f454e69b0388660b4458132e17590914e77cd5efc06b1b94491a7aad"
+dependencies = [
+ "js-sys",
+ "wasm-bindgen",
+ "web-sys",
+]
+
+[[package]]
 name = "libc"
 version = "0.2.149"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -788,7 +799,12 @@ dependencies = [
 name = "local-restaurants-ui"
 version = "0.0.0"
 dependencies = [
+ "gloo-console 0.3.0",
+ "gloo-utils 0.2.0",
+ "leaflet",
  "stylist",
+ "wasm-bindgen",
+ "web-sys",
  "yew",
 ]
 
